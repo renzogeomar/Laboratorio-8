@@ -44,14 +44,18 @@ if ($found) {
     print "<form method='POST' action='/cgi-bin/save.pl'>";
     print "<input type='hidden' name='titulo' value='$titulo'>";
     print "<input type='hidden' name='ruta' value='$ruta'>";
-    print "<textarea name='contenido' rows='10' cols='50'>$contenido</textarea><br>";
+    print "<textarea name='contenido' rows='10' cols='50'>$contenido</textarea><br><br>";
     print "<input type='submit' value='Guardar cambios'>";
     print "</form>";
 } else {
     print "<h1>Página no encontrada.</h1>";
 }
 
-# Enlace para regresar al listado
-print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
+# Botón para regresar al listado
+print "<div class='boton'>";
+print "<form action='/cgi-bin/list.pl' method='get'>";
+print "<button type='submit'>Regresar</button>";
+print "</form>";
+print "</div>";
 
 print "</body></html>";

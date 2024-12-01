@@ -29,6 +29,11 @@ if (-e $data_file) {
     print "<h1>No hay páginas creadas.</h1>";
 }
 print "<br><form action='/new.html' method='get'>
-            <button type='submit'>Regresar</button>
+            <button type='submit'>Agregar</button>
           </form>";
+print "<div class='boton'>";
+print "<form action='/index.html' method='get'>";
+print "<button type='submit'>Inicio</button>";
+print "</form>";
+print "</div>";
 print "</body></html>";
