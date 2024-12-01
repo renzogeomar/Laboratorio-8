@@ -3,12 +3,14 @@ use strict;
 use warnings;
 use CGI;
 use CGI::Carp 'fatalsToBrowser';
+use Text::Markdown 'markdown'; # Módulo para convertir Markdown a HTML
 
 # Crear objeto CGI
 my $q = CGI->new();
 print $q->header('text/html; charset=UTF-8');
+print "<html lang=\"es\"><head><title>Ver Página</title></head><body>";
 
-# Obtener el título de la página a visualizar
+# Obtener el título de la página a mostrar
 my $titulo = $q->param('titulo');
 
 # Ruta al archivo de datos
@@ -36,18 +38,17 @@ if (-e $data_file) {
 }
 
 if ($found) {
-    # Convertir saltos de línea codificados en etiquetas <br>
-    $contenido =~ s/\\n/<br>/g;
+    # Convertir el contenido de Markdown a HTML
+    my $contenido_html = markdown($contenido);
 
     # Mostrar la página en formato HTML
-    print "<html lang=\"es\"><head><title>$titulo</title></head><body>";
     print "<h1>$titulo</h1>";
-    print "<p>$contenido</p>";
-    print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
-    print "</body></html>";
+    print "<div>$contenido_html</div>";
 } else {
-    print "<html lang=\"es\"><head><title>Página no encontrada</title></head><body>";
-    print "<h1>Página no encontrada</h1>";
-    print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
-    print "</body></html>";
+    print "<h1>Página no encontrada.</h1>";
 }
+
+# Enlace para regresar al listado
+print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
+
+print "</body></html>";
