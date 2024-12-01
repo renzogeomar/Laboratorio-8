@@ -6,38 +6,47 @@ use CGI::Carp 'fatalsToBrowser';
 
 # Crear objeto CGI
 my $q = CGI->new();
-print $q->header('text/html; charset=UTF-8');
 
-# Obtener los parámetros enviados desde el formulario
+# Obtener datos del formulario
 my $titulo = $q->param('titulo');
 my $contenido = $q->param('contenido');
 my $ruta = $q->param('ruta');
 
 # Ruta al archivo de datos
 my $data_file = "/var/www/html/pages/pages_data.txt";
-my @lines;
 
-# Leer el archivo y actualizar el contenido de la página
-open my $fh, '<', $data_file or die "No se puede abrir el archivo de datos: $!";
-while (my $line = <$fh>) {
-    chomp $line;
-    my ($titulo_file, $contenido_file, $ruta_file) = split /\|/, $line;
+# Codificar saltos de línea en el contenido
+$contenido =~ s/\n/\\n/g;
 
-    # Si encontramos la página, actualizamos su contenido
-    if ($titulo eq $titulo_file) {
-        $line = "$titulo|$contenido|$ruta"; # Actualizar línea con nuevo contenido
+# Actualizar el archivo de datos
+if (-e $data_file) {
+    open my $fh, '<', $data_file or die "No se puede abrir el archivo de datos: $!";
+    my @lines = <$fh>;
+    close $fh;
+
+    open my $fh_out, '>', $data_file or die "No se puede abrir el archivo para escritura: $!";
+    foreach my $line (@lines) {
+        chomp $line;
+        my ($titulo_file, $contenido_file, $ruta_file) = split /\|/, $line;
+        
+        if ($titulo eq $titulo_file) {
+            # Reemplazar con los datos actualizados
+            print $fh_out "$titulo|$contenido|$ruta\n";
+        } else {
+            print $fh_out "$line\n";
+        }
     }
-    push @lines, $line;
+    close $fh_out;
 }
-close $fh;
 
-# Escribir los cambios en el archivo
-open my $fh_out, '>', $data_file or die "No se puede abrir el archivo para escribir: $!";
-foreach my $line (@lines) {
-    print $fh_out "$line\n";
-}
-close $fh_out;
+# Actualizar el archivo HTML correspondiente
+my $html_file = "/var/www/html/pages/$ruta";
+open my $html_fh, '>', $html_file or die "No se puede crear el archivo HTML: $!";
+print $html_fh "<html lang=\"es\"><head><title>$titulo</title></head><body>";
+print $html_fh "<h1>$titulo</h1>";
+print $html_fh "<p>$contenido</p>";  # Aquí los saltos de línea no son necesarios.
+print $html_fh "</body></html>";
+close $html_fh;
 
-# Redirigir al listado de páginas
-print "<h1>Página actualizada correctamente.</h1>";
-print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
+# Redirigir al listado
+print $q->redirect('/cgi-bin/list.pl');

@@ -27,7 +27,9 @@ if (-e $data_file) {
 
         # Buscar la página por su título
         if ($titulo eq $titulo_file) {
+            # Decodificar saltos de línea
             $contenido = $contenido_file;
+            $contenido =~ s/\\n/\n/g;  # Convertir el marcador especial en saltos de línea reales
             $ruta = $ruta_file;
             $found = 1;
             last;
