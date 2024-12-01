@@ -6,47 +6,48 @@ use CGI::Carp 'fatalsToBrowser';
 
 # Crear objeto CGI
 my $q = CGI->new();
+print $q->header('text/html; charset=UTF-8');
 
-# Obtener el título desde los parámetros
+# Obtener el título de la página a visualizar
 my $titulo = $q->param('titulo');
 
 # Ruta al archivo de datos
 my $data_file = "/var/www/html/pages/pages_data.txt";
+my $found = 0;
+my ($contenido, $ruta);
 
-# Transformar Markdown a HTML (función básica)
-sub markdown_to_html {
-    my ($markdown) = @_;
-    $markdown =~ s/^# (.*)/<h1>$1<\/h1>/gm;      # Títulos de nivel 1
-    $markdown =~ s/^## (.*)/<h2>$1<\/h2>/gm;     # Títulos de nivel 2
-    $markdown =~ s/^(?!<h)(.*)/<p>$1<\/p>/gm;    # Párrafos
-    $markdown =~ s/\*\*(.*?)\*\*/<b>$1<\/b>/g;   # Negrita
-    $markdown =~ s/\*(.*?)\*/<i>$1<\/i>/g;       # Cursiva
-    return $markdown;
-}
-
-# Buscar el contenido asociado al título
-if (-e $data_file && $titulo) {
+# Verificar si el archivo de datos existe
+if (-e $data_file) {
     open my $fh, '<', $data_file or die "No se puede abrir el archivo de datos: $!";
+    
     while (my $line = <$fh>) {
         chomp $line;
-        my ($stored_title, $contenido, $ruta) = split /\|/, $line;
-        if ($stored_title eq $titulo) {
-            my $contenido_html = markdown_to_html($contenido);
-            print $q->header('text/html; charset=UTF-8');
-            print "<html lang=\"es\"><head><title>$titulo</title></head><body>";
-            print "<h1>$titulo</h1>";
-            print $contenido_html;
-            print "<br><a href='/cgi-bin/list.pl'>Volver al listado</a>";
-            print "</body></html>";
-            exit;
+        my ($titulo_file, $contenido_file, $ruta_file) = split /\|/, $line;
+
+        # Buscar la página por su título
+        if ($titulo eq $titulo_file) {
+            $contenido = $contenido_file;
+            $ruta = $ruta_file;
+            $found = 1;
+            last;
         }
     }
     close $fh;
 }
 
-# Si no se encuentra la página, mostrar mensaje de error
-print $q->header('text/html; charset=UTF-8');
-print "<html lang=\"es\"><head><title>Error</title></head><body>";
-print "<h1>Página no encontrada</h1>";
-print "<a href='/cgi-bin/list.pl'>Volver al listado</a>";
-print "</body></html>";
+if ($found) {
+    # Convertir saltos de línea codificados en etiquetas <br>
+    $contenido =~ s/\\n/<br>/g;
+
+    # Mostrar la página en formato HTML
+    print "<html lang=\"es\"><head><title>$titulo</title></head><body>";
+    print "<h1>$titulo</h1>";
+    print "<p>$contenido</p>";
+    print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
+    print "</body></html>";
+} else {
+    print "<html lang=\"es\"><head><title>Página no encontrada</title></head><body>";
+    print "<h1>Página no encontrada</h1>";
+    print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
+    print "</body></html>";
+}
