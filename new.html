@@ -4,23 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Nueva Página</title>
+    <style>
+        #contenido {
+            width: 25%; /* Para que ocupe el 100% del ancho disponible */
+            height: 250px; /* Ajusta la altura del cuadro de texto */
+        }
+    </style>
 </head>
 <body>
-    <h1>Crear Nueva Página</h1>
-    <form action="cgi-bin/new.pl" method="post">
-        <label for="titulo">Título de la Página</label>
-        <input type="text" id="titulo" name="titulo" required><br>
-        
-        <label for="contenido">Contenido en Markdown</label><br>
-        <textarea id="contenido" name="contenido" required></textarea><br>
-        
-        <button type="submit">Guardar Página</button>
-    </form>
-
+    <div>
+        <h1>Crear Nueva Página</h1>
+        <form action="cgi-bin/new.pl" method="post">
+            <label for="titulo">Título de la Página:</label><br>
+            <input type="text" id="titulo" name="titulo" required><br>
+            
+            <label for="contenido">Contenido en Markdown:</label><br>
+            <textarea id="contenido" name="contenido" required></textarea><br>
+            
+            <button type="submit">Guardar Página</button>
+        </form>
+    </div>
     <!-- Botón para regresar a index.html -->
-    <br><br>
-    <a href="/index.html">
-        <button>Regresar a Index</button>
-    </a>
+    <div class="boton">
+        <br><br>
+        <a href="/index.html">
+            <button>Inicio</button>
+        </a>
+    </div>
 </body>
 </html>

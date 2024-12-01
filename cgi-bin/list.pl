@@ -11,6 +11,7 @@ print "<html lang=\"es\"><head><title>Listado de Páginas</title></head><body>";
 my $data_file = "/var/www/html/pages/pages_data.txt";
 
 if (-e $data_file) {
+    print "<h1>Listado de páginas</h1>";
     open my $fh, '<', $data_file or die "No se puede abrir el archivo de datos: $!";
     while (my $line = <$fh>) {
         chomp $line;
@@ -27,5 +28,7 @@ if (-e $data_file) {
 } else {
     print "<h1>No hay páginas creadas.</h1>";
 }
-print "<br><a href='/new.html'>Regresar a crear nueva página</a>";
+print "<br><form action='/new.html' method='get'>
+            <button type='submit'>Regresar</button>
+          </form>";
 print "</body></html>";
