@@ -25,7 +25,6 @@ if (!$titulo || !$contenido) {
 my $data_file = "/var/www/html/pages/pages_data.txt";
 
 # Reemplazar saltos de línea en el contenido por un marcador (e.g., "\\n")
-# Esto asegura que el contenido se almacene en una sola línea en el archivo.
 $contenido =~ s/\n/\\n/g;
 
 # Guardar los datos en el archivo

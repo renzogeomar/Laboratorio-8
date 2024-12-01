@@ -40,14 +40,12 @@ else {
     print "<h1>No hay páginas creadas.</h1>";
 }
 
-# Botón para agregar nueva página, ahora dentro del div 'boton'
 print "<div class='boton'>";
 print "<form action='/new.html' method='get'>
             <button type='submit'>Agregar</button>
           </form>";
 print "</div>";
 
-# Botón para regresar al index, fuera del div 'boton'
 print "<div class='botonInicio'>";
 print "<form action='/index.html' method='get'>";
 print "<button type='submit'>Inicio</button>";

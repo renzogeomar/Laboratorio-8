@@ -10,7 +10,6 @@ my $q = CGI->new();
 print $q->header('text/html; charset=UTF-8');
 print "<html lang=\"es\"><head><title>Eliminar Página</title><link rel=\"stylesheet\" href=\"../css/style.css\"></head><body>";
 
-# Abrir el contenedor 'interfas'
 print "<div class='interfas'>";
 
 # Obtener el título de la página a eliminar

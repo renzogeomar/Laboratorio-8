@@ -12,8 +12,8 @@ body {
 
 /* Centrar el div .interfas */
 .interfas {
-    width: 80%;  /* Ajusta el ancho del contenedor */
-    max-width: 1000px; /* Máximo ancho para que no se expanda demasiado */
+    width: 80%; 
+    max-width: 1000px; 
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -22,7 +22,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Título centrado */
+
 .titulo {
     text-align: center;
     font-size: 24px;
@@ -40,9 +40,9 @@ body {
 
 /* Estilo para el div .botonInicio */
 .botonInicio {
-    position: fixed;  /* Fijado en la pantalla */
-    bottom: 20px;  /* A 20px del fondo */
-    right: 20px;   /* A 20px de la derecha */
+    position: fixed;  
+    bottom: 20px;
+    right: 20px;   
 }
 
 /* Estilo para los botones dentro de .botonInicio */
@@ -61,7 +61,7 @@ body {
     background-color: #0056b3;
 }
 
-/* Estilo de los botones dentro de .boton */
+
 .boton button {
     background-color: #28a745;
     color: white;

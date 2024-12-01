@@ -48,7 +48,6 @@ if ($found) {
     print "<input type='hidden' name='ruta' value='$ruta'>";
     print "<textarea name='contenido' rows='10' cols='50'>$contenido</textarea><br><br>";
 
-    # Botón de "Guardar cambios" dentro de un div 'boton' con un <button>
     print "<div class='boton'>";
     print "<button type='submit'>Guardar cambios</button>";
     print "</div>";
@@ -58,7 +57,6 @@ if ($found) {
     print "<h1>Página no encontrada.</h1>";
 }
 
-# Botón para regresar al listado
 print "<div class='botonInicio'>";
 print "<form action='/cgi-bin/list.pl' method='get'>";
 print "<button type='submit'>Regresar</button>";
