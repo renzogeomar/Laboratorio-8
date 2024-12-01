@@ -8,7 +8,7 @@ use Text::Markdown 'markdown'; # Módulo para convertir Markdown a HTML
 # Crear objeto CGI
 my $q = CGI->new();
 print $q->header('text/html; charset=UTF-8');
-print "<html lang=\"es\"><head><title>Ver Página</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>";
+print "<html lang=\"es\"><head><title>Ver Página</title><link rel=\"stylesheet\" href=\"../css/style.css\"></head><body>";
 # Obtener el título de la página a mostrar
 my $titulo = $q->param('titulo');
 
@@ -35,7 +35,7 @@ if (-e $data_file) {
     }
     close $fh;
 }
-
+print "<div class='interfas'>";
 if ($found) {
     # Reemplazar "\n" literal por saltos de línea reales
     $contenido =~ s/\\n/\n/g;
@@ -56,5 +56,5 @@ print "<form action='/cgi-bin/list.pl' method='get'>
             <button type='submit'>Regresar al listado</button>
           </form>";
 print "</div>";
-
+print "</div>";
 print "</body></html>";

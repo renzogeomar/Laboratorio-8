@@ -7,7 +7,7 @@ use CGI::Carp 'fatalsToBrowser';
 # Crear objeto CGI
 my $q = CGI->new();
 print $q->header('text/html; charset=UTF-8');
-print "<html lang=\"es\"><head><title>Editar Página</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>";
+print "<html lang=\"es\"><head><title>Editar Página</title><link rel=\"stylesheet\" href=\"../css/style.css\"></head><body>";
 
 # Obtener el nombre de la página a editar
 my $titulo = $q->param('titulo');
@@ -20,7 +20,7 @@ my ($contenido, $ruta);
 # Verificar si el archivo de datos existe
 if (-e $data_file) {
     open my $fh, '<', $data_file or die "No se puede abrir el archivo de datos: $!";
-    
+
     while (my $line = <$fh>) {
         chomp $line;
         my ($titulo_file, $contenido_file, $ruta_file) = split /\|/, $line;
@@ -47,9 +47,12 @@ if ($found) {
     print "<input type='hidden' name='titulo' value='$titulo'>";
     print "<input type='hidden' name='ruta' value='$ruta'>";
     print "<textarea name='contenido' rows='10' cols='50'>$contenido</textarea><br><br>";
+
+    # Botón de "Guardar cambios" dentro de un div 'boton' con un <button>
     print "<div class='boton'>";
-    print "<input type='submit' value='Guardar cambios'>";
+    print "<button type='submit'>Guardar cambios</button>";
     print "</div>";
+
     print "</form>";
 } else {
     print "<h1>Página no encontrada.</h1>";
