@@ -60,6 +60,11 @@ COPY ./pages /var/www/html/pages
 RUN chown -R www-data:www-data /var/www/html/pages
 RUN chmod -R 775 /var/www/html/pages
 
+# Asegúrate de que el archivo 'pages_data.txt' tenga permisos de escritura
+RUN touch /var/www/html/pages/pages_data.txt \
+    && chown www-data:www-data /var/www/html/pages/pages_data.txt \
+    && chmod 666 /var/www/html/pages/pages_data.txt
+
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 # Agregar LogLevel debug aquí
