@@ -38,6 +38,9 @@ if (-e $data_file) {
 }
 
 if ($found) {
+    # Reemplazar "\n" literal por saltos de línea reales
+    $contenido =~ s/\\n/\n/g;
+
     # Convertir el contenido de Markdown a HTML
     my $contenido_html = markdown($contenido);
 
