@@ -7,7 +7,7 @@ use CGI::Carp 'fatalsToBrowser';
 # Crear objeto CGI
 my $q = CGI->new();
 print $q->header('text/html; charset=UTF-8');
-print "<html lang=\"es\"><head><title>Editar Página</title></head><body>";
+print "<html lang=\"es\"><head><title>Editar Página</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>";
 
 # Obtener el nombre de la página a editar
 my $titulo = $q->param('titulo');
@@ -38,6 +38,8 @@ if (-e $data_file) {
     close $fh;
 }
 
+print "<div class='interfas'>";
+
 if ($found) {
     # Mostrar el nombre de la página y un formulario para editar el contenido
     print "<h1>Editar: $titulo</h1>";
@@ -45,17 +47,20 @@ if ($found) {
     print "<input type='hidden' name='titulo' value='$titulo'>";
     print "<input type='hidden' name='ruta' value='$ruta'>";
     print "<textarea name='contenido' rows='10' cols='50'>$contenido</textarea><br><br>";
+    print "<div class='boton'>";
     print "<input type='submit' value='Guardar cambios'>";
+    print "</div>";
     print "</form>";
 } else {
     print "<h1>Página no encontrada.</h1>";
 }
 
 # Botón para regresar al listado
-print "<div class='boton'>";
+print "<div class='botonInicio'>";
 print "<form action='/cgi-bin/list.pl' method='get'>";
 print "<button type='submit'>Regresar</button>";
 print "</form>";
 print "</div>";
 
+print "</div>";
 print "</body></html>";

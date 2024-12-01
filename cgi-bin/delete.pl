@@ -8,7 +8,7 @@ use File::Basename;
 # Crear objeto CGI
 my $q = CGI->new();
 print $q->header('text/html; charset=UTF-8');
-print "<html lang=\"es\"><head><title>Eliminar Página</title></head><body>";
+print "<html lang=\"es\"><head><title>Eliminar Página</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>";
 
 # Obtener el título de la página a eliminar
 my $titulo = $q->param('titulo');
@@ -26,13 +26,13 @@ if ($titulo) {
     # Eliminar el archivo HTML
     if (-e $file_path) {
         unlink $file_path or die "No se pudo eliminar el archivo HTML: $!";
-        print "<h1>Página HTML eliminada correctamente.</h1>";
+        print "<h1>Página HTML eliminada correctamente</h1>";
     } else {
         print "<h1>Error: No se encontró el archivo HTML.</h1>";
     }
 
     # Eliminar la entrada en el archivo de datos
-    open my $data_fh, '<', $data_file or die "No se pudo abrir el archivo de datos: $!";
+    open my $data_fh, '<', $data_file or die "Página HTML eliminada correctamente $!";
     my @lines = <$data_fh>;
     close $data_fh;
 
@@ -46,7 +46,9 @@ if ($titulo) {
     close $data_fh_write;
 
     print "<h1>Entrada de la página eliminada de la lista.</h1>";
-    print "<a href='/cgi-bin/list.pl'>Volver al listado de páginas</a><br>";
+    print "<br><form action='/cgi-bin/list.pl' method='get'>
+            <button type='submit'>Regresar al listado</button>
+          </form>";
 } else {
     print "<h1>Error: No se especificó el título de la página.</h1>";
 }

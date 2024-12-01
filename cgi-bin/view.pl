@@ -8,8 +8,7 @@ use Text::Markdown 'markdown'; # Módulo para convertir Markdown a HTML
 # Crear objeto CGI
 my $q = CGI->new();
 print $q->header('text/html; charset=UTF-8');
-print "<html lang=\"es\"><head><title>Ver Página</title></head><body>";
-
+print "<html lang=\"es\"><head><title>Ver Página</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>";
 # Obtener el título de la página a mostrar
 my $titulo = $q->param('titulo');
 
@@ -21,7 +20,7 @@ my ($contenido, $ruta);
 # Verificar si el archivo de datos existe
 if (-e $data_file) {
     open my $fh, '<', $data_file or die "No se puede abrir el archivo de datos: $!";
-    
+
     while (my $line = <$fh>) {
         chomp $line;
         my ($titulo_file, $contenido_file, $ruta_file) = split /\|/, $line;
@@ -51,7 +50,11 @@ if ($found) {
     print "<h1>Página no encontrada.</h1>";
 }
 
-# Enlace para regresar al listado
-print "<br><a href='/cgi-bin/list.pl'>Regresar al listado de páginas</a>";
+# Botón para regresar al listado de páginas
+print "<div class='boton'>";
+print "<form action='/cgi-bin/list.pl' method='get'>
+            <button type='submit'>Regresar al listado</button>
+          </form>";
+print "</div>";
 
 print "</body></html>";

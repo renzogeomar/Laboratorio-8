@@ -14,7 +14,7 @@ my $contenido = $q->param('contenido');
 # Validar que los campos no estén vacíos
 if (!$titulo || !$contenido) {
     print $q->header('text/html; charset=UTF-8');
-    print "<html lang=\"es\"><head><title>Error</title></head><body>";
+    print "<html lang=\"es\"><head><title>Error</title><link rel=\"stylesheet\" href=\"style.css\"></head><body>";
     print "<h1>Error: Título o contenido vacío.</h1>";
     print "<a href='/new.html'>Regresar</a>";
     print "</body></html>";
