@@ -1,7 +1,5 @@
 #!/usr/bin/perl -w
 use strict;
-#!/usr/bin/perl -w
-use strict;
 use warnings;
 use CGI;
 use CGI::Carp 'fatalsToBrowser';
@@ -21,19 +19,21 @@ if (-e $data_file) {
         chomp $line;
         my ($titulo, $contenido, $ruta) = split /\|/, $line;
 
-        # Mostrar la información de la página y agregar los botones de eliminar y "E"
-        print "<h2>$titulo</h2>";
-        print "<p>$contenido</p>";
+        # Mostrar el nombre de la página como un hiperenlace
+        print "<p><a href='$ruta'>$titulo</a> ";
 
-        # Botón de eliminación (X)
+        # Botón de eliminación (X) al lado del nombre de la página
         print "<a href='/cgi-bin/delete.pl?titulo=$titulo' style='color:red; text-decoration:none;'>[X]</a> ";
 
-        # Botón de edición (E) - Sin funcionalidad por ahora
-        print "<button disabled style='margin-left: 10px;'>[E]</button><br><br>";
+        # Botón de edición (E) - Redirige a edit.pl con el nombre de la página
+        print "<a href='/cgi-bin/edit.pl?titulo=$titulo' style='margin-left: 10px;'>[E]</a></p>";
     }
     close $fh;
 } else {
     print "<h1>No hay páginas creadas.</h1>";
 }
+
+# Enlace para regresar a new.html
 print "<br><a href='/new.html'>Regresar a crear nueva página</a>";
+
 print "</body></html>";
